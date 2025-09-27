@@ -1,0 +1,174 @@
+<svg viewBox="0 0 1000 800" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景の海 -->
+  <rect width="1000" height="800" fill="#4A90E2"/>
+  
+  <!-- 波のパターン -->
+  <defs>
+    <pattern id="waves" patternUnits="userSpaceOnUse" width="100" height="20">
+      <path d="M0,10 Q25,0 50,10 T100,10" stroke="#87CEEB" stroke-width="2" fill="none"/>
+    </pattern>
+  </defs>
+  <rect width="1000" height="800" fill="url(#waves)"/>
+  
+  <!-- 西側の緑の島（START エリア） -->
+  <g id="western-islands">
+    <!-- メインの緑の島 -->
+    <path d="M50,200 Q100,180 150,200 Q180,220 200,250 Q180,280 150,300 Q100,320 50,300 Q20,280 20,250 Q20,220 50,200" fill="#228B22"/>
+    
+    <!-- 小さな家 -->
+    <rect x="80" y="240" width="20" height="15" fill="#FFD700"/>
+    <polygon points="80,240 90,230 100,240" fill="#8B4513"/>
+    
+    <!-- 緑のパイプ -->
+    <rect x="120" y="220" width="8" height="40" fill="#32CD32"/>
+    <rect x="118" y="215" width="12" height="8" fill="#228B22"/>
+    
+    <!-- 滝とプール -->
+    <rect x="160" y="200" width="15" height="60" fill="#87CEEB"/>
+    <ellipse cx="167" cy="280" rx="20" ry="8" fill="#4169E1"/>
+    
+    <!-- 北側の島 -->
+    <path d="M200,150 Q250,130 300,150 Q320,180 300,220 Q250,240 200,220 Q180,190 200,150" fill="#228B22"/>
+    
+    <!-- 橋 -->
+    <rect x="150" y="210" width="50" height="4" fill="#8B4513"/>
+    <rect x="155" y="205" width="40" height="2" fill="#654321"/>
+    
+    <!-- 小さな城 -->
+    <rect x="220" y="170" width="25" height="20" fill="#696969"/>
+    <polygon points="220,170 232.5,160 245,170" fill="#2F4F4F"/>
+    <rect x="225" y="175" width="5" height="10" fill="#000000"/>
+  </g>
+  
+  <!-- 北側の山と水のエリア -->
+  <g id="northern-area">
+    <!-- 山の島 -->
+    <path d="M400,100 Q450,80 500,100 Q520,130 500,160 Q450,180 400,160 Q380,130 400,100" fill="#8B4513"/>
+    
+    <!-- 滝 -->
+    <rect x="420" y="100" width="20" height="80" fill="#87CEEB"/>
+    
+    <!-- タワー -->
+    <rect x="460" y="120" width="15" height="40" fill="#696969"/>
+    <polygon points="460,120 467.5,110 475,120" fill="#2F4F4F"/>
+    
+    <!-- 豆の木 -->
+    <rect x="480" y="140" width="8" height="40" fill="#32CD32"/>
+    <ellipse cx="484" cy="130" rx="15" ry="20" fill="#228B22"/>
+    
+    <!-- 橋 -->
+    <rect x="300" y="180" width="100" height="4" fill="#8B4513"/>
+    <rect x="305" y="175" width="90" height="2" fill="#654321"/>
+  </g>
+  
+  <!-- 東側の森の島 -->
+  <g id="eastern-forest">
+    <path d="M700,200 Q750,180 800,200 Q820,230 800,260 Q750,280 700,260 Q680,230 700,200" fill="#006400"/>
+    
+    <!-- 木々 -->
+    <circle cx="720" cy="220" r="12" fill="#228B22"/>
+    <rect x="718" y="220" width="4" height="15" fill="#8B4513"/>
+    
+    <circle cx="750" cy="240" r="10" fill="#32CD32"/>
+    <rect x="749" y="240" width="2" height="12" fill="#654321"/>
+    
+    <circle cx="780" cy="220" r="14" fill="#228B22"/>
+    <rect x="778" y="220" width="4" height="18" fill="#8B4513"/>
+    
+    <!-- 小さな城 -->
+    <rect x="730" y="200" width="20" height="15" fill="#696969"/>
+    <polygon points="730,200 740,190 750,200" fill="#2F4F4F"/>
+  </g>
+  
+  <!-- 南側の岩/火山の島（GOAL エリア） -->
+  <g id="southern-volcanic">
+    <path d="M300,500 Q400,480 500,500 Q520,530 500,560 Q400,580 300,560 Q280,530 300,500" fill="#8B0000"/>
+    
+    <!-- 岩の形成 -->
+    <polygon points="320,520 340,500 360,520 350,540" fill="#696969"/>
+    <polygon points="380,540 400,520 420,540 410,560" fill="#2F4F4F"/>
+    <polygon points="440,520 460,500 480,520 470,540" fill="#696969"/>
+    
+    <!-- 小さな城 -->
+    <rect x="350" y="500" width="25" height="20" fill="#696969"/>
+    <polygon points="350,500 362.5,490 375,500" fill="#2F4F4F"/>
+    <rect x="355" y="505" width="5" height="10" fill="#000000"/>
+  </g>
+  
+  <!-- 中央のBowser城 -->
+  <g id="bowser-castle">
+    <!-- 雲 -->
+    <ellipse cx="500" cy="400" rx="80" ry="20" fill="#FFFFFF" opacity="0.8"/>
+    <ellipse cx="480" cy="390" rx="40" ry="15" fill="#FFFFFF" opacity="0.8"/>
+    <ellipse cx="520" cy="390" rx="40" ry="15" fill="#FFFFFF" opacity="0.8"/>
+    
+    <!-- 城の本体 -->
+    <rect x="450" y="350" width="100" height="80" fill="#8B4513"/>
+    
+    <!-- Bowserの顔 -->
+    <circle cx="500" cy="380" r="30" fill="#8B4513"/>
+    <!-- 目 -->
+    <circle cx="490" cy="375" r="3" fill="#FF0000"/>
+    <circle cx="510" cy="375" r="3" fill="#FF0000"/>
+    <!-- 鼻 -->
+    <ellipse cx="500" cy="385" rx="4" ry="3" fill="#FFA500"/>
+    <!-- 口 -->
+    <path d="M490,390 Q500,400 510,390" stroke="#000000" stroke-width="2" fill="none"/>
+    <!-- 角 -->
+    <polygon points="485,360 490,350 495,360" fill="#8B4513"/>
+    <polygon points="505,360 510,350 515,360" fill="#8B4513"/>
+    <!-- 牙 -->
+    <polygon points="495,395 500,400 505,395" fill="#FFFFFF"/>
+    <polygon points="505,395 510,400 515,395" fill="#FFFFFF"/>
+  </g>
+  
+  <!-- 道の上の島 -->
+  <g id="path-islands">
+    <!-- 北東の島 -->
+    <ellipse cx="400" cy="200" rx="30" ry="20" fill="#228B22"/>
+    <circle cx="400" cy="195" r="8" fill="#32CD32"/>
+    <rect x="398" y="195" width="4" height="10" fill="#8B4513"/>
+    
+    <!-- 東の島 -->
+    <ellipse cx="600" cy="300" rx="25" ry="18" fill="#228B22"/>
+    <circle cx="600" cy="295" r="6" fill="#32CD32"/>
+    <rect x="599" y="295" width="2" height="8" fill="#8B4513"/>
+    
+    <!-- 南東の島 -->
+    <ellipse cx="700" cy="500" rx="28" ry="22" fill="#228B22"/>
+    <circle cx="700" cy="495" r="7" fill="#32CD32"/>
+    <rect x="699" y="495" width="2" height="9" fill="#8B4513"/>
+    
+    <!-- 南の島 -->
+    <ellipse cx="500" cy="650" rx="32" ry="25" fill="#228B22"/>
+    <circle cx="500" cy="645" r="9" fill="#32CD32"/>
+    <rect x="499" y="645" width="2" height="11" fill="#8B4513"/>
+    
+    <!-- 南西の島 -->
+    <ellipse cx="300" cy="650" rx="26" ry="20" fill="#228B22"/>
+    <circle cx="300" cy="645" r="7" fill="#32CD32"/>
+    <rect x="299" y="645" width="2" height="9" fill="#8B4513"/>
+    
+    <!-- 西の島 -->
+    <ellipse cx="150" cy="550" rx="24" ry="18" fill="#228B22"/>
+    <circle cx="150" cy="545" r="6" fill="#32CD32"/>
+    <rect x="149" y="545" width="2" height="8" fill="#8B4513"/>
+    
+    <!-- 北西の島 -->
+    <ellipse cx="200" cy="180" rx="22" ry="16" fill="#228B22"/>
+    <circle cx="200" cy="175" r="5" fill="#32CD32"/>
+    <rect x="199" y="175" width="2" height="7" fill="#8B4513"/>
+  </g>
+  
+  <g id="paths">
+    <!-- 統合された道（3/4周で終了） -->
+    <path d="M90,250 Q150,200 200,180 Q250,160 300,180 Q400,200 500,250 Q600,300 700,350 Q750,400 800,450 Q750,500 700,550 Q600,600 500,650 Q400,700 300,650 Q200,600 150,550 Q100,500 90,450" stroke="#F4A460" stroke-width="8" fill="none"/>
+  </g>
+  
+  <!-- START ラベル -->
+  <text x="90" y="280" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#0000FF">START</text>
+  
+  <!-- GOAL ラベル -->
+  <text x="400" y="580" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#0000FF">GOAL</text>
+  
+</svg>

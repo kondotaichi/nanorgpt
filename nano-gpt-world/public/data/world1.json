@@ -1,0 +1,124 @@
+{
+    "id": "world1",
+    "title": "nanoGPT World",
+    "mapImageUrl": "/maps/world1.svg",
+    "chapters": [
+      {
+        "id": "ch1",
+        "title": "Intro",
+        "colabUrl": "https://colab.research.google.com/github/HayatoHongo/Everyones_nanoGPT/blob/ja/notebooks/todo/Everyones_nanoGPT_colab_Chapter00_todo_ja.ipynb",
+        "markerXY": { "x": 0.18, "y": 0.3125 },
+        "password": "intro",
+        "salt": "nanoGPT2024",
+        "answerHash": "f70ff2ec702471781f03adeac341d0a8e79ebcd616de082ef23a1d8b0b3401eb"
+      },
+      {
+        "id": "ch2",
+        "title": "Tokenization",
+        "colabUrl": "https://colab.research.google.com/github/HayatoHongo/Everyones_nanoGPT/blob/ja/notebooks/todo/Everyones_nanoGPT_colab_Chapter01_todo_ja.ipynb",
+        "markerXY": { "x": 0.27, "y": 0.225 },
+        "password": "tokenization",
+        "salt": "nanoGPT2024",
+        "answerHash": "9823b2beebafa421ec80af6987fb7684b2e4b9dba7e96cbbbe6955da57fa2236"
+      },
+      {
+        "id": "ch3",
+        "title": "Training",
+        "colabUrl": "https://colab.research.google.com/github/HayatoHongo/Everyones_nanoGPT/blob/ja/notebooks/todo/Everyones_nanoGPT_colab_Chapter02_todo_ja.ipynb",
+        "markerXY": { "x": 0.32, "y": 0.225 },
+        "password": "training",
+        "salt": "nanoGPT2024",
+        "answerHash": "95c164daaed17de50060d7363b778be62fa8e8671c003c1fca05eca0c0e3634a"
+      },
+      {
+        "id": "ch4",
+        "title": "Attention Mechanism",
+        "colabUrl": "https://colab.research.google.com/github/HayatoHongo/Everyones_nanoGPT/blob/ja/notebooks/todo/Everyones_nanoGPT_colab_Chapter03_todo_ja.ipynb",
+        "markerXY": { "x": 0.40, "y": 0.25 },
+        "password": "attention",
+        "salt": "nanoGPT2024",
+        "answerHash": "b5302b3b2d80b7d4de5ed10649ff63b9f61f3704af98d4d6ea6cabc740b67e4b"
+      },
+      {
+        "id": "ch5",
+        "title": "Transformer Architecture",
+        "colabUrl": "https://colab.research.google.com/github/HayatoHongo/Everyones_nanoGPT/blob/ja/notebooks/todo/Everyones_nanoGPT_colab_Chapter04_todo_ja.ipynb",
+        "markerXY": { "x": 0.50, "y": 0.3125 },
+        "password": "transformer",
+        "salt": "nanoGPT2024",
+        "answerHash": "0b1b55d336452552f97123339d92728911de32b36f92d993ee40bddeaaa438b1"
+      },
+      {
+        "id": "ch6",
+        "title": "Positional Encoding",
+        "colabUrl": "https://colab.research.google.com/github/HayatoHongo/Everyones_nanoGPT/blob/ja/notebooks/todo/Everyones_nanoGPT_colab_Chapter05_todo_ja.ipynb",
+        "markerXY": { "x": 0.60, "y": 0.38 },
+        "password": "positional",
+        "salt": "nanoGPT2024",
+        "answerHash": "777b7a0d622211246cd842561367f5c07b1e7fe06eb8074e18faaf2277001c26"
+      },
+      {
+        "id": "ch7",
+        "title": "Multi-Head Attention",
+        "colabUrl": "https://colab.research.google.com/github/HayatoHongo/Everyones_nanoGPT/blob/ja/notebooks/todo/Everyones_nanoGPT_colab_Chapter06_todo_ja.ipynb",
+        "markerXY": { "x": 0.63, "y": 0.42 },
+        "password": "multihead",
+        "salt": "nanoGPT2024",
+        "answerHash": "e42432b9b3c7a278b12fb64554dfdc15ac915c93910171a40f98c4e05ae6be8f"
+      },
+      {
+        "id": "ch8",
+        "title": "Feed Forward Networks",
+        "colabUrl": "https://colab.research.google.com/github/HayatoHongo/Everyones_nanoGPT/blob/ja/notebooks/todo/Everyones_nanoGPT_colab_Chapter07_todo_ja.ipynb",
+        "markerXY": { "x": 0.70, "y": 0.5 },
+        "password": "feedforward",
+        "salt": "nanoGPT2024",
+        "answerHash": "2818311f2b22972c3efb274f3ab019aa1fc9b8a17478c24d75b97f58a3359a60"
+      },
+      {
+        "id": "ch9",
+        "title": "Layer Normalization",
+        "colabUrl": "https://colab.research.google.com/github/HayatoHongo/Everyones_nanoGPT/blob/ja/notebooks/todo/Everyones_nanoGPT_colab_Chapter08_todo_ja.ipynb",
+        "markerXY": { "x": 0.73, "y": 0.5625 },
+        "password": "normalization",
+        "salt": "nanoGPT2024",
+        "answerHash": "bdf0978e29578b3a834402d35db66df5190ceca3abbe5c02e78feb809c455071"
+      },
+      {
+        "id": "ch10",
+        "title": "Residual Connections",
+        "colabUrl": "https://colab.research.google.com/github/HayatoHongo/Everyones_nanoGPT/blob/ja/notebooks/todo/Everyones_nanoGPT_colab_Chapter09_todo_ja.ipynb",
+        "markerXY": { "x": 0.70, "y": 0.625 },
+        "password": "residual",
+        "salt": "nanoGPT2024",
+        "answerHash": "c5f7e10423141e80a20c38af18251a95a07d30e3d0e5555f34e2cbeb8426f0d7"
+      },
+      {
+        "id": "ch11",
+        "title": "Model Optimization",
+        "colabUrl": "https://colab.research.google.com/github/HayatoHongo/Everyones_nanoGPT/blob/ja/notebooks/todo/Everyones_nanoGPT_colab_Chapter10_todo_ja.ipynb",
+        "markerXY": { "x": 0.60, "y": 0.71 },
+        "password": "optimization",
+        "salt": "nanoGPT2024",
+        "answerHash": "0c5c884be9870e0983bd19252ebaa27f1857e8f582bf6af3b13b1c9087e42838"
+      },
+      {
+        "id": "ch12",
+        "title": "Fine-tuning",
+        "colabUrl": "https://colab.research.google.com/github/HayatoHongo/Everyones_nanoGPT/blob/ja/notebooks/todo/Everyones_nanoGPT_colab_Chapter11_todo_ja.ipynb",
+        "markerXY": { "x": 0.50, "y": 0.79 },
+        "password": "finetuning",
+        "salt": "nanoGPT2024",
+        "answerHash": "0aea1d6f2a4402877e9c78b1f6c8c91c64d6f18f5117f3591da15d4a0e50dbdd"
+      },
+      {
+        "id": "ch13",
+        "title": "Advanced Techniques",
+        "colabUrl": "https://colab.research.google.com/github/HayatoHongo/Everyones_nanoGPT/blob/ja/notebooks/todo/Everyones_nanoGPT_colab_Chapter12_todo_ja.ipynb",
+        "markerXY": { "x": 0.18, "y": 0.5625 },
+        "password": "advanced",
+        "salt": "nanoGPT2024",
+        "answerHash": "b7105cd49d1fb865d415a40294e69df52fa65b1b127ba69f5a3d3d72cde9840e"
+      }
+    ]
+  }

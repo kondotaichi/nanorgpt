@@ -1,0 +1,19 @@
+{
+  "answers": {
+    "ch1": "intro",
+    "ch2": "tokenization", 
+    "ch3": "training",
+    "ch4": "attention",
+    "ch5": "transformer",
+    "ch6": "positional",
+    "ch7": "multihead",
+    "ch8": "feedforward",
+    "ch9": "normalization",
+    "ch10": "residual",
+    "ch11": "optimization",
+    "ch12": "finetuning",
+    "ch13": "advanced"
+  },
+  "salt": "nanoGPT2024",
+  "description": "各チャプターの正解パスワード一覧。salt + password をSHA-256でハッシュ化してanswerHashを生成"
+}
