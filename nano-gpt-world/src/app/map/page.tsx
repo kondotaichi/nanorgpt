@@ -70,13 +70,30 @@ export default function MapPage() {
   // progress 読み込み
   useEffect(() => {
     (async () => {
-      if (!user || !world) return;
-      const pid = `${user.uid}_${world.id}`;
-      const snap = await getDoc(doc(db, "progress", pid));
-      const arr: string[] = snap.exists()
-        ? (snap.data()?.clearedChapterIds || [])
-        : [];
-      setCleared(new Set(arr));
+      if (!user || !world) {
+        console.log("Progress load skipped - user:", !!user, "world:", !!world);
+        return;
+      }
+      
+      try {
+        const pid = `${user.uid}_${world.id}`;
+        console.log("Loading progress for:", pid);
+        
+        const snap = await getDoc(doc(db, "progress", pid));
+        console.log("Firestore response:", snap.exists(), snap.data());
+        
+        const arr: string[] = snap.exists()
+          ? (snap.data()?.clearedChapterIds || [])
+          : [];
+        
+        console.log("Cleared chapters:", arr);
+        setCleared(new Set(arr));
+      } catch (error) {
+        console.error("Error loading progress:", error);
+        if (error.code === 'permission-denied') {
+          console.error("権限エラー: Firebaseのセキュリティルールを確認してください");
+        }
+      }
     })();
   }, [user, world]);
 
@@ -88,37 +105,54 @@ export default function MapPage() {
   // done: 答えを検証して progress 更新
   const onSubmitAnswer = async () => {
     if (!user || !world || !selected) return;
-    const hash = await sha256Hex(selected.salt + answer.trim());
-    console.log("=== デバッグ情報 ===");
-    console.log("入力されたパスワード:", `"${answer.trim()}"`);
-    console.log("Salt:", `"${selected.salt}"`);
-    console.log("Salt + Password:", `"${selected.salt + answer.trim()}"`);
-    console.log("生成されたハッシュ:", hash);
-    console.log("期待されるハッシュ:", selected.answerHash);
-    console.log("比較結果:", hash === selected.answerHash);
-    console.log("==================");
     
-    if (hash !== selected.answerHash) {
-      alert("パスワードが違います");
-      return;
+    try {
+      const hash = await sha256Hex(selected.salt + answer.trim());
+      console.log("=== デバッグ情報 ===");
+      console.log("入力されたパスワード:", `"${answer.trim()}"`);
+      console.log("Salt:", `"${selected.salt}"`);
+      console.log("Salt + Password:", `"${selected.salt + answer.trim()}"`);
+      console.log("生成されたハッシュ:", hash);
+      console.log("期待されるハッシュ:", selected.answerHash);
+      console.log("比較結果:", hash === selected.answerHash);
+      console.log("==================");
+      
+      if (hash !== selected.answerHash) {
+        alert("パスワードが違います");
+        return;
+      }
+      
+      const pid = `${user.uid}_${world.id}`;
+      console.log("Saving progress for:", pid);
+      
+      await setDoc(
+        doc(db, "progress", pid),
+        {
+          uid: user.uid,
+          worldId: world.id,
+          clearedChapterIds: arrayUnion(selected.id),
+          updatedAt: serverTimestamp(),
+        },
+        { merge: true }
+      );
+      
+      console.log("Progress saved successfully");
+      
+      const next = new Set(cleared);
+      next.add(selected.id);
+      setCleared(next);
+      setAnswer("");
+      setSelected(null);
+      
+      if (next.size === world.chapters.length) alert("GOAL！全クリアです🎉");
+    } catch (error) {
+      console.error("Error saving progress:", error);
+      if (error.code === 'permission-denied') {
+        alert("権限エラー: Firebaseのセキュリティルールを確認してください");
+      } else {
+        alert("進捗の保存に失敗しました: " + error.message);
+      }
     }
-    const pid = `${user.uid}_${world.id}`;
-    await setDoc(
-      doc(db, "progress", pid),
-      {
-        uid: user.uid,
-        worldId: world.id,
-        clearedChapterIds: arrayUnion(selected.id),
-        updatedAt: serverTimestamp(),
-      },
-      { merge: true }
-    );
-    const next = new Set(cleared);
-    next.add(selected.id);
-    setCleared(next);
-    setAnswer("");
-    setSelected(null);
-    if (next.size === world.chapters.length) alert("GOAL！全クリアです🎉");
   };
 
   if (!user) return <div className="p-8">Checking auth...</div>;
@@ -146,8 +180,7 @@ export default function MapPage() {
           priority
         />
         
-        
-        {/* チャプター（既存の機能） */}
+        {/* チャプター */}
         {world.chapters.map((c) => {
           const isCleared = cleared.has(c.id);
           const isSel = selected?.id === c.id;
@@ -157,56 +190,89 @@ export default function MapPage() {
               onClick={() => setSelected(c)}
               className={cn(
                 "absolute -translate-x-1/2 -translate-y-1/2 rounded-full",
-                "w-6 h-6 ring-4 transition",
-                isCleared ? "bg-green-500 ring-green-300" : "bg-red-500 ring-red-300",
-                isSel && "outline outline-4 outline-purple-400"
+                "w-6 h-6 ring-4 transition-all duration-200 hover:scale-110",
+                isCleared ? "bg-green-500 ring-green-300 shadow-lg" : "bg-red-500 ring-red-300",
+                isSel && "outline outline-4 outline-purple-400 scale-125"
               )}
               style={{
                 left: `${c.markerXY.x * 100}%`,
                 top: `${c.markerXY.y * 100}%`,
               }}
-              title={c.title}
-            />
+              title={`${c.title} ${isCleared ? '(完了済み)' : '(未完了)'}`}
+            >
+              {/* 完了済みの場合はチェックマークを表示 */}
+              {isCleared && (
+                <div className="absolute inset-0 flex items-center justify-center text-white text-xs font-bold">
+                  ✓
+                </div>
+              )}
+            </button>
           );
         })}
       </div>
 
-      {/* モーダル */}
+      {/* モーダル - 新しいUI */}
       {selected && (
         <div className="absolute inset-0 bg-black/60 flex items-center justify-center z-30">
           <div className="bg-white text-black rounded-xl p-4 w-[340px] shadow-xl">
-            <div className="text-lg font-bold mb-2">{selected.title}</div>
-            <div className="flex gap-2 mb-3">
+            {/* タイトルとdoneステータス */}
+            <div className="flex items-center justify-between mb-2">
+              <div className="text-lg font-bold">{selected.title}</div>
+              <div className={`px-2 py-1 rounded text-xs font-medium transition-colors ${
+                cleared.has(selected.id) 
+                  ? 'bg-green-100 text-green-800' 
+                  : 'bg-gray-100 text-gray-500'
+              }`}>
+                {cleared.has(selected.id) ? '✓ Done' : '○ Pending'}
+              </div>
+            </div>
+            
+            {/* notebookボタンのみ */}
+            <div className="mb-3">
               <button
-                className="flex-1 px-3 py-2 bg-amber-500 text-white rounded"
+                className="w-full px-3 py-2 bg-amber-500 text-white rounded hover:bg-amber-600 transition-colors"
                 onClick={() => window.open(selected.colabUrl, "_blank")}
               >
-                notebook
+                📓 Open Notebook
               </button>
             </div>
+            
+            {/* パスワード入力 */}
             <form onSubmit={(e) => { e.preventDefault(); onSubmitAnswer(); }}>
               <input
                 type="password"
                 placeholder="ノートの合言葉"
-                className="w-full border rounded px-3 py-2 mb-3"
+                className="w-full border rounded px-3 py-2 mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={answer}
                 onChange={(e) => setAnswer(e.target.value)}
+                disabled={cleared.has(selected.id)}
               />
             </form>
+            
+            {/* アクションボタン */}
             <div className="flex justify-end gap-2">
               <button
-                className="px-3 py-2 rounded"
+                className="px-3 py-2 rounded border hover:bg-gray-50 transition-colors"
                 onClick={() => setSelected(null)}
               >
                 閉じる
               </button>
-              <button
-                className="px-3 py-2 bg-green-600 text-white rounded"
-                onClick={onSubmitAnswer}
-              >
-                送信
-              </button>
+              {!cleared.has(selected.id) && (
+                <button
+                  className="px-3 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
+                  onClick={onSubmitAnswer}
+                >
+                  送信
+                </button>
+              )}
             </div>
+            
+            {/* 完了済みの場合のメッセージ */}
+            {cleared.has(selected.id) && (
+              <div className="mt-3 p-2 bg-green-50 text-green-700 rounded text-sm text-center">
+                🎉 このチャプターは完了済みです！
+              </div>
+            )}
           </div>
         </div>
       )}
