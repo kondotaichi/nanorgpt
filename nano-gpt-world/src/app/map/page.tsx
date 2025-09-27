@@ -70,30 +70,13 @@ export default function MapPage() {
   // progress 読み込み
   useEffect(() => {
     (async () => {
-      if (!user || !world) {
-        console.log("Progress load skipped - user:", !!user, "world:", !!world);
-        return;
-      }
-      
-      try {
-        const pid = `${user.uid}_${world.id}`;
-        console.log("Loading progress for:", pid);
-        
-        const snap = await getDoc(doc(db, "progress", pid));
-        console.log("Firestore response:", snap.exists(), snap.data());
-        
-        const arr: string[] = snap.exists()
-          ? (snap.data()?.clearedChapterIds || [])
-          : [];
-        
-        console.log("Cleared chapters:", arr);
-        setCleared(new Set(arr));
-      } catch (error) {
-        console.error("Error loading progress:", error);
-        if (error.code === 'permission-denied') {
-          console.error("権限エラー: Firebaseのセキュリティルールを確認してください");
-        }
-      }
+      if (!user || !world) return;
+      const pid = `${user.uid}_${world.id}`;
+      const snap = await getDoc(doc(db, "progress", pid));
+      const arr: string[] = snap.exists()
+        ? (snap.data()?.clearedChapterIds || [])
+        : [];
+      setCleared(new Set(arr));
     })();
   }, [user, world]);
 
@@ -105,54 +88,37 @@ export default function MapPage() {
   // done: 答えを検証して progress 更新
   const onSubmitAnswer = async () => {
     if (!user || !world || !selected) return;
+    const hash = await sha256Hex(selected.salt + answer.trim());
+    console.log("=== デバッグ情報 ===");
+    console.log("入力されたパスワード:", `"${answer.trim()}"`);
+    console.log("Salt:", `"${selected.salt}"`);
+    console.log("Salt + Password:", `"${selected.salt + answer.trim()}"`);
+    console.log("生成されたハッシュ:", hash);
+    console.log("期待されるハッシュ:", selected.answerHash);
+    console.log("比較結果:", hash === selected.answerHash);
+    console.log("==================");
     
-    try {
-      const hash = await sha256Hex(selected.salt + answer.trim());
-      console.log("=== デバッグ情報 ===");
-      console.log("入力されたパスワード:", `"${answer.trim()}"`);
-      console.log("Salt:", `"${selected.salt}"`);
-      console.log("Salt + Password:", `"${selected.salt + answer.trim()}"`);
-      console.log("生成されたハッシュ:", hash);
-      console.log("期待されるハッシュ:", selected.answerHash);
-      console.log("比較結果:", hash === selected.answerHash);
-      console.log("==================");
-      
-      if (hash !== selected.answerHash) {
-        alert("パスワードが違います");
-        return;
-      }
-      
-      const pid = `${user.uid}_${world.id}`;
-      console.log("Saving progress for:", pid);
-      
-      await setDoc(
-        doc(db, "progress", pid),
-        {
-          uid: user.uid,
-          worldId: world.id,
-          clearedChapterIds: arrayUnion(selected.id),
-          updatedAt: serverTimestamp(),
-        },
-        { merge: true }
-      );
-      
-      console.log("Progress saved successfully");
-      
-      const next = new Set(cleared);
-      next.add(selected.id);
-      setCleared(next);
-      setAnswer("");
-      setSelected(null);
-      
-      if (next.size === world.chapters.length) alert("GOAL！全クリアです🎉");
-    } catch (error) {
-      console.error("Error saving progress:", error);
-      if (error.code === 'permission-denied') {
-        alert("権限エラー: Firebaseのセキュリティルールを確認してください");
-      } else {
-        alert("進捗の保存に失敗しました: " + error.message);
-      }
+    if (hash !== selected.answerHash) {
+      alert("パスワードが違います");
+      return;
     }
+    const pid = `${user.uid}_${world.id}`;
+    await setDoc(
+      doc(db, "progress", pid),
+      {
+        uid: user.uid,
+        worldId: world.id,
+        clearedChapterIds: arrayUnion(selected.id),
+        updatedAt: serverTimestamp(),
+      },
+      { merge: true }
+    );
+    const next = new Set(cleared);
+    next.add(selected.id);
+    setCleared(next);
+    setAnswer("");
+    setSelected(null);
+    if (next.size === world.chapters.length) alert("GOAL！全クリアです🎉");
   };
 
   if (!user) return <div className="p-8">Checking auth...</div>;
