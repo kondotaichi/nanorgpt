@@ -249,7 +249,7 @@ export default function MapPage() {
               />
             </form>
             
-            {/* アクションボタン */}
+            {/* actionボタン */}
             <div className="flex justify-end gap-2">
               <button
                 className="px-3 py-2 rounded border hover:bg-gray-50 transition-colors"
