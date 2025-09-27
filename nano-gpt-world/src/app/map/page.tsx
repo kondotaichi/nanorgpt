@@ -90,7 +90,7 @@ export default function MapPage() {
         setCleared(new Set(arr));
       } catch (error) {
         console.error("Error loading progress:", error);
-        if (error instanceof Error && 'code' in error && error.code === 'permission-denied') {
+        if (error.code === 'permission-denied') {
           console.error("権限エラー: Firebaseのセキュリティルールを確認してください");
         }
       }
@@ -147,10 +147,10 @@ export default function MapPage() {
       if (next.size === world.chapters.length) alert("GOAL！全クリアです🎉");
     } catch (error) {
       console.error("Error saving progress:", error);
-      if (error instanceof Error && 'code' in error && error.code === 'permission-denied') {
+      if (error.code === 'permission-denied') {
         alert("権限エラー: Firebaseのセキュリティルールを確認してください");
       } else {
-        alert("進捗の保存に失敗しました: " + (error instanceof Error ? error.message : String(error)));
+        alert("進捗の保存に失敗しました: " + error.message);
       }
     }
   };
